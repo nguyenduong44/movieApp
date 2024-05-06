@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 
 function Home() {
   return (
-    <div className='h-[1000px] pt-24'>
+    <div className='pt-24'>
       <Header />
       <SlideShow/>
       <Content />

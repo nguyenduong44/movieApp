@@ -1,8 +1,12 @@
+import Header from '../../components/Header'
+import Footer from '../../components/Footer';
+
 function Profile() {
   return (
-    <>
-      <h1>PROFILE PAGE</h1>
-    </>
+    <div>
+      <Header />
+      <Footer />
+    </div>
   );
 }
 
