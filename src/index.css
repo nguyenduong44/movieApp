@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn{
+  @apply drop-shadow rounded-2xl py-2 px-8 uppercase text-base font-extrabold cursor-pointer text-white bg-primary bg-opacity-80
+}
