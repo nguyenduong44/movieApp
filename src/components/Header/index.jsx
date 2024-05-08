@@ -15,7 +15,7 @@ function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollPosition(window.pageYOffset);
+      setScrollPosition(window.scrollY);
     }
 
     window.addEventListener('scroll', handleScroll);
@@ -28,7 +28,7 @@ function Header() {
   return (
     //#32332c
     <header className={`bg-transparent fixed top-0 w-full h-10 px-9 py-8 z-10
-      transition-colors duration-500 ${scrollPosition > 50 ? 'bg-[#34352c] bg-opacity-90' : 'bg-transparent'} 
+      transition-colors duration-500 ${scrollPosition > 50 ? 'bg-[#32332c] bg-opacity-90' : 'bg-transparent'} 
     `}>
       <div className="flex items-center justify-between w-full h-full">
         <h1 className="text-[#fff] text-[28px] tracking-[0.2em] leading-6 flex items-center font-extrabold font-dancing">

@@ -1,15 +1,23 @@
-import Header from '../../components/Header'
-import SlideShow from '../../components/SlideShow';
-import Content from '../../components/Content'
-import Footer from '../../components/Footer'
+import { Suspense, lazy} from 'react';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+
+const Content = lazy(() => import('../../components/Content'));
+const SlideShow = lazy(() => import('../../components/SlideShow'));
 
 function Home() {
+
+
   return (
     <div className='pt-24'>
-      <Header />
-      <SlideShow/>
-      <Content />
-      <Footer />
+        <Header />
+
+        <Suspense fallback={<div>Loading...</div>}>
+          <SlideShow />
+          <Content />
+        </Suspense>
+
+        <Footer />
     </div>
   );
 }

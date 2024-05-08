@@ -153,7 +153,7 @@ function SlideShow() {
       (
         <div
           style={{
-            backgroundImage: `url('https://image.tmdb.org/t/p/original${posters[currentIndex].backdrop_path}')`,
+            backgroundImage: `url('https://image.tmdb.org/t/p/w1280${posters[currentIndex].backdrop_path}')`,
             boxShadow: 'inset 0px 0px 500px rgba(0,0,0,1)'
           }}
           className="w-6/12 h-full bg-cover rounded-2xl duration-500 absolute right-[112px] top-0 opacity-90">

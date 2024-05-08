@@ -1,35 +1,47 @@
-import PopularMovie from "./PopularMovie";
-import TopRatedMovie from "./TopRatedMovie";
-import TVSeries from "./TVSeries";
+import { useCallback } from "react";
+
+import ContentSection from "./ContentSection";
+import ItemList from "./ItemList";
+
 import { FaHotjar } from "react-icons/fa";
 import { TbStarsFilled } from "react-icons/tb";
 import { PiTelevisionDuotone } from "react-icons/pi";
 
-function Content() {
+function Content({scrollPosition}) {
+  const handleDateToYear = useCallback((date) => 
+  {
+    return date.slice(0,4);
+  }, []);
+
   return (
     <div className="my-16 px-28">
-      <div>
-        <div className="flex justify-between items-center text-white mb-8">
-          <h1 className="text-2xl font-extrabold flex items-center"> <FaHotjar color="yellow" className="mr-2"/> Popular</h1>
-          <div className="bg-slate-600 h-px grow mx-4"></div>
-          <h4 className="text-sm text-slate-300">See More</h4>
-        </div>
-        <PopularMovie />
+      <ContentSection title="Popular" icon={<FaHotjar color="yellow" className="mr-2"/>}>
+          <ItemList
+            title="Popular"
+            fetchUrl='popular?api_key=92cd1c00191d7a87cc773c5ee643696c'
+            onDateToYear={handleDateToYear}
+            dataType='movie'
+          />
+        
+      </ContentSection>
 
-        <div className="flex justify-between items-center text-white mb-8 mt-16">
-          <h1 className="text-2xl font-extrabold flex items-center"> <TbStarsFilled color="yellow" size={30} className="mr-2"/> Top Rated</h1>
-          <div className="bg-slate-600 h-px grow mx-4"></div>
-          <h4 className="text-sm text-slate-300">See More</h4>
-        </div>
-        <TopRatedMovie />
+      <ContentSection title="Top Rated" icon={<TbStarsFilled color="yellow" size={30} className="mr-2"/>}>
+        <ItemList 
+          title="Top Rated"
+          fetchUrl='top_rated?api_key=92cd1c00191d7a87cc773c5ee643696c'
+          onDateToYear={handleDateToYear}
+          dataType='movie'
+        />
+      </ContentSection>
 
-        <div className="flex justify-between items-center text-white mb-8 mt-16">
-          <h1 className="text-2xl font-extrabold flex items-center"> <PiTelevisionDuotone color="yellow" size={30} className="mr-2"/> TV Series</h1>
-          <div className="bg-slate-600 h-px grow mx-4"></div>
-          <h4 className="text-sm text-slate-300">See More</h4>
-        </div>
-        <TVSeries />
-      </div>
+      <ContentSection title="TV Series" icon={<PiTelevisionDuotone color="yellow" size={30} className="mr-2"/>}>
+        <ItemList 
+          title="TV Series"
+          fetchUrl='popular?api_key=92cd1c00191d7a87cc773c5ee643696c'
+          onDateToYear={handleDateToYear}
+          dataType='tv'
+        />
+      </ContentSection>
     </div>
   );
 }

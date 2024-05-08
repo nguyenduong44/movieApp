@@ -12,7 +12,7 @@ const publicRoutes = [
     component: Profile
   },
   {
-    path: '/details/:movieId',
+    path: '/details/:dataType/:movieId',
     component: Details
   }
 ];
