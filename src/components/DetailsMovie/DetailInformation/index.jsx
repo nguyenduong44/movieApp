@@ -1,0 +1,51 @@
+
+function DetailInformation({ data, onLoading, onError }) {
+
+  if (onLoading) {
+    return <p>Loading data...</p>;
+  }
+
+  if (onError) {
+    return <p>Error fetching data</p>;
+  }
+
+  return (
+    <div className="w-full bg-[#050b0a] py-9 px-28">
+      <div className="text-slate-300 flex">
+        <div className="w-1/2">
+          <h3 className="text-lg text-white font-bold mb-3">About</h3>
+          <div className="flex mb-3 text-sm">
+            <p className="w-[30%]">Genres</p>
+            {data && data.genres && data.genres.map((genre, index) => {
+              return <span key={genre.id} className={`${index !== 0 ? 'ml-3' : ''}`}>{genre.name}</span>
+            })}
+          </div>
+          <div className="flex mb-3 text-sm">
+            <p className="w-[30%]">Date</p>
+            {data && <span>{data.release_date}</span>}
+          </div>
+          <div className="flex mb-3 text-sm">
+            <p className="w-[30%]">Country</p>
+            {data && <span>{data.origin_country[0]}</span>}
+          </div>
+          <div className="flex text-sm">
+            <p className="w-[30%]">Rating</p>
+            {data && <span>{data.vote_average}</span>}
+          </div>
+        </div>
+        <div className="w-1/2">
+          <h3 className="text-lg text-white font-bold mb-3">Overview</h3>
+          <p className="">{data && data.overview}</p>
+        </div>
+      </div>
+      <div className="text-white">
+        actor
+      </div>
+      <div className="text-white">
+        reviews
+      </div>
+    </div>
+  );
+}
+
+export default DetailInformation;

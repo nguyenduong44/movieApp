@@ -1,64 +1,92 @@
 import { useParams } from "react-router-dom";
-import {useState, useEffect} from 'react'
+import { useEffect, useState } from "react";
+import { useQuery } from '@tanstack/react-query'
+import axios from "axios";
+
+import DetailInformation from "./DetailInformation";
+
+import { PiPlayCircleDuotone } from "react-icons/pi";
+import { TbPlaylistAdd, TbHeart } from "react-icons/tb";
+
+
 
 function DetailsMovie() {
-
-  const [movieDetails, getMovieDetails] = useState({});
-  const [loadingMovie, setLoadingMovie] = useState(true);
-  const [errorMovie, setErrorMovie] = useState(null);
-
+  const [playBtn, setPlayBtn] = useState(false);
+  const [pLayList, setPLayList] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const {movieId, dataType} = useParams();
 
- 
-  const fetchMovieDetails = () => {
-    fetch(`https://api.themoviedb.org/3/${dataType}/${movieId}?api_key=92cd1c00191d7a87cc773c5ee643696c&append_to_response=credits`)
-      .then(res => {
-        if(!res.ok)
-        {
-          throw new Error('Failed to fetch movie!');
-        }
-        return res.json();
-      })
-      .then(data => {
-        getMovieDetails(data);
-        setLoadingMovie(false);
-      })
-      .catch(err => {
-        setErrorMovie(err.message);
-        setLoadingMovie(true);
-      })
-  };
+  const fetchItems = async () => {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/${dataType}/${movieId}
+      ?api_key=92cd1c00191d7a87cc773c5ee643696c&append_to_response=credits`
+    );
+    return response.data;
+  }
+
+  const { isLoading, isError, data } = useQuery({
+    queryKey: [movieId],  
+    queryFn: fetchItems,
+    retry: 3,
+    retryDelay: 1000,
+    staleTime: Infinity,
+    cacheTime: Infinity
+  });
 
   useEffect(() => {
-    fetchMovieDetails();
-  },[]);
+    if(!isLoading && !isError)
+    {
+      window.scrollTo({top: 0, behavior: "instant"})
+    }
+  }, [isLoading,isError]);
 
-  if(loadingMovie)
+  if(isLoading)
   {
-    return <div className="text-white">Loading movie...</div>
-  };
+    return <div className="text-white">Loading Items Popular</div>
+  }
 
-  if(errorMovie)
+  if(isError)
   {
-    return <div className="text-white">Error: {errorMovie}</div>
+    return <div className="text-white">Error Details</div>
   }
 
   return (
     <div>
       <div style={{
-        backgroundImage: `url('https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}')`
+        backgroundImage: `url('https://image.tmdb.org/t/p/original${data.backdrop_path}')`
       }}
-      className="w-full h-[79vh] bg-cover bg-center bg-no-repeat">
-        <div>
-          this is play button
-        </div>
-        <div>
-          this is functional button
+      className="w-full h-[79vh] bg-cover bg-center bg-no-repeat relative">
+        <div className="absolute inset-0 bg-black opacity-55"></div>
+        <PiPlayCircleDuotone color={playBtn ? '#CCFF00' : '#fff'} size={100} 
+          className="absolute opacity-65 cursor-pointer top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          onMouseEnter={() => setPlayBtn(true)}
+          onMouseLeave={() => setPlayBtn(false)}
+        />
+        <div className="absolute left-28 bottom-14">
+          <div>
+            <h1 className="text-white font-extrabold text-4xl mb-5">{data.title}</h1>
+            <div className="flex items-center">
+              <h1 className="text-white text-base border-none rounded-lg 
+                      bg-primary bg-opacity-65 px-4 py-2 cursor-pointer 
+                      hover:bg-opacity-80 duration-300
+              ">
+                  Watch Now
+              </h1>
+              <TbPlaylistAdd color={pLayList ? '8eb200' : '#fff'} size={30} className="mx-6 cursor-pointer duration-300"
+                  onMouseEnter={() => setPLayList(true)}
+                  onMouseLeave={() => setPLayList(false)}
+              />
+              <TbHeart color={favorite ? 'red' : '#fff'} size={30} className="cursor-pointer duration-300"
+                  onMouseEnter={() => setFavorite(true)}
+                  onMouseLeave={() => setFavorite(false)}
+              />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="bg-white">
-        Day lai information cua details page
-      </div>
+      { !isLoading && !isError &&
+        data && <DetailInformation data = {data}  onLoading={isLoading} onError={isError}
+        />}
     </div>
   );
 }

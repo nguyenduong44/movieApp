@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import {LazyLoadImage} from 'react-lazy-load-image-component'
 
 import {BsChevronCompactLeft, BsChevronCompactRight} from 'react-icons/bs';
 import { GoDotFill } from "react-icons/go";
@@ -84,6 +85,14 @@ function SlideShow() {
     }
   }, [currentIndex, posters, genre]);
 
+
+  useEffect(() => {
+    if(!loadingPoster && !errorPoster && !loadingGenres && !errorGenres)
+    {
+      window.scrollTo({top: 0, behavior: "smooth"});
+    }
+  })
+
   if(loadingPoster)
   {
     return <div>Loading Poster...</div>
@@ -141,7 +150,6 @@ function SlideShow() {
             return <div key={index} className={`ml-${index === 0 ? 0 : 3}`}>{genre}</div>
           })}
         </div>
-        
         <div className="text-gray-500 text-sm font-semibold leading-6 mb-8 line-clamp-4">
           {posters[currentIndex].overview} 
         </div>
@@ -165,7 +173,6 @@ function SlideShow() {
               ))}
             </div>
         </div>)}
-
         <div className="hover:bg-opacity-40 absolute top-[50%] -translate-x-0 translate-y-[-50%] left-10 text-2xl rounded-full p-2 bg-primary bg-opacity-75 text-white cursor-pointer"> 
           <BsChevronCompactLeft onClick={prevSlide} size={20}/>
         </div>

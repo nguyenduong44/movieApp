@@ -7,7 +7,7 @@ import { FaHotjar } from "react-icons/fa";
 import { TbStarsFilled } from "react-icons/tb";
 import { PiTelevisionDuotone } from "react-icons/pi";
 
-function Content({scrollPosition}) {
+function Content() {
   const handleDateToYear = useCallback((date) => 
   {
     return date.slice(0,4);
@@ -22,9 +22,7 @@ function Content({scrollPosition}) {
             onDateToYear={handleDateToYear}
             dataType='movie'
           />
-        
       </ContentSection>
-
       <ContentSection title="Top Rated" icon={<TbStarsFilled color="yellow" size={30} className="mr-2"/>}>
         <ItemList 
           title="Top Rated"
@@ -33,7 +31,6 @@ function Content({scrollPosition}) {
           dataType='movie'
         />
       </ContentSection>
-
       <ContentSection title="TV Series" icon={<PiTelevisionDuotone color="yellow" size={30} className="mr-2"/>}>
         <ItemList 
           title="TV Series"

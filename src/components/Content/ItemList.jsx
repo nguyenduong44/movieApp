@@ -1,58 +1,57 @@
-import { memo, useState, useEffect, useRef } from "react";
-import {LazyLoadImage} from 'react-lazy-load-image-component'
+import { memo, useEffect } from "react";
+
+import { useQuery } from '@tanstack/react-query';
+
+import axios from 'axios'
+
+import {LazyLoadImage} from 'react-lazy-load-image-component';
 import { Link } from "react-router-dom";
 
 import { CiStar } from "react-icons/ci";
 
-function ItemList({fetchUrl, title, onDateToYear, dataType}) {
-  const [items, setItems] = useState([]);
-  const [loadingItems, setLoadingItems] = useState(true);
-  const [errorItems, setErrorItems] = useState(null);
+function ItemList({fetchUrl, title, onDateToYear, dataType }) {
+
+  const fetchItems = async () => {
+    const apiUrl = dataType === 'movie' ? 
+      'https://api.themoviedb.org/3/movie/' :
+      'https://api.themoviedb.org/3/tv/';
+    const response = await axios.get(apiUrl + fetchUrl);
+    return response.data.results;
+  }
+
+  const { isError, isLoading, data } = useQuery({
+    queryKey: [title],
+    queryFn: fetchItems,
+    retry: 3,
+    retryDelay: 1000,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = dataType === 'movie' ? 
-          'https://api.themoviedb.org/3/movie/' :
-          'https://api.themoviedb.org/3/tv/';
-        const response = await fetch(apiUrl + fetchUrl);
-        if (!response.ok) {
-          throw new Error('Failed to fetch data!');
-        }
-        const data = await response.json();
-        setItems(data.results); 
-        setLoadingItems(false);
-      } catch (error) {
-        setErrorItems(error.message);
-        setLoadingItems(false);
-      }
-    };
-
-    fetchData();
-  }, [fetchUrl, dataType]);
-
-  useEffect(() => {
-    if (!loadingItems && !errorItems) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if(!isLoading && !isError)
+    {
+      window.scrollTo({top: 0, behavior: "smooth"})
     }
-  }, [loadingItems, errorItems]);
+  }, [isLoading,isError]);
 
 
-  if(loadingItems)
+  if(isLoading)
   {
     return <div className="text-white">Loading Items Popular</div>
   }
 
-  if(errorItems)
+  if(isError)
   {
-    return <div className="text-white">Error {title}: {errorItems}</div>
+    return <div className="text-white">Error {title}</div>
   }
 
   return (
     <div className="text-white grid grid-cols-5 gap-x-8 gap-y-10">
-      {items && items.slice(0,10).map((item, index) => {
+      {data && data.slice(0,10).map((item, index) => {
         return (
-          <Link to={`/details/${dataType}/${item.id}`} key={index} preventScrollReset={false}>
+          <Link to={`/details/${dataType}/${item.id}`} key={index}>
             <div className="col-span-1 relative hover:grayscale-[30%] cursor-pointer
             duration-500 ease-in-out hover:scale-110
             ">
@@ -61,7 +60,6 @@ function ItemList({fetchUrl, title, onDateToYear, dataType}) {
                 alt={item.title}
                 className="rounded-lg mb-1"
               />
-
               <h2 className="line-clamp-1 text-lg">{item.title || item.name}</h2>
               <p className="text-sm text-slate-400 font-light">{onDateToYear(item.release_date || item.first_air_date)}</p>
                 <p className="absolute flex bg-[#4a521e] items-center top-2 left-[-8px] font-bold text-sm border-2 border-l-8 border-primary py-[2px] px-2">
