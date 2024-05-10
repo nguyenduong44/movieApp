@@ -8,7 +8,10 @@ module.exports = {
         nanum: ['"Nanum Gothic"', 'san6s-serif'],
         dancing: ['"Dancing Script"', 'sans-serif']
       },
-      colors: {'primary': '#CCFF00'}
+      colors: {
+        'primary': '#CCFF00',
+        'primary-rgba': 'rgba(204, 255, 0, 0.7)'
+      }
     },
   },
   plugins: [],

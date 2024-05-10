@@ -53,18 +53,19 @@ function DetailsMovie() {
   return (
     <div>
       <div style={{
-        backgroundImage: `url('https://image.tmdb.org/t/p/original${data.backdrop_path}')`
-      }}
-      className="w-full h-[79vh] bg-cover bg-center bg-no-repeat relative">
-        <div className="absolute inset-0 bg-black opacity-55"></div>
+        backgroundImage: `url('https://image.tmdb.org/t/p/original${data.backdrop_path}')`}}
+      className="w-full h-[90vh] bg-cover bg-center bg-no-repeat relative from-[#050b0a]">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050b0a]"
+              style={{boxShadow: 'inset 0 72px 40px -7px rgba(0,0,0,0.3)'}}
+        ></div>
         <PiPlayCircleDuotone color={playBtn ? '#CCFF00' : '#fff'} size={100} 
-          className="absolute opacity-65 cursor-pointer top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="absolute opacity-65 cursor-pointer top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300"
           onMouseEnter={() => setPlayBtn(true)}
           onMouseLeave={() => setPlayBtn(false)}
         />
         <div className="absolute left-28 bottom-14">
           <div>
-            <h1 className="text-white font-extrabold text-4xl mb-5">{data.title}</h1>
+            <h1 className="text-white font-extrabold text-4xl mb-5">{data.title || data.name}</h1>
             <div className="flex items-center">
               <h1 className="text-white text-base border-none rounded-lg 
                       bg-primary bg-opacity-65 px-4 py-2 cursor-pointer 

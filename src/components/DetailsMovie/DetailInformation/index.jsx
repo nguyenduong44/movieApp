@@ -1,3 +1,5 @@
+import { memo } from "react";
+import ActorInformation from "./ActorInformation";
 
 function DetailInformation({ data, onLoading, onError }) {
 
@@ -11,7 +13,7 @@ function DetailInformation({ data, onLoading, onError }) {
 
   return (
     <div className="w-full bg-[#050b0a] py-9 px-28">
-      <div className="text-slate-300 flex">
+      <div className="text-slate-300 flex mb-16">
         <div className="w-1/2">
           <h3 className="text-lg text-white font-bold mb-3">About</h3>
           <div className="flex mb-3 text-sm">
@@ -22,7 +24,7 @@ function DetailInformation({ data, onLoading, onError }) {
           </div>
           <div className="flex mb-3 text-sm">
             <p className="w-[30%]">Date</p>
-            {data && <span>{data.release_date}</span>}
+            {data && <span>{data.release_date || data.first_air_date}</span>}
           </div>
           <div className="flex mb-3 text-sm">
             <p className="w-[30%]">Country</p>
@@ -38,14 +40,23 @@ function DetailInformation({ data, onLoading, onError }) {
           <p className="">{data && data.overview}</p>
         </div>
       </div>
+      {!onLoading && !onError && data &&
+        <ActorInformation data={data} onLoading={onLoading} onError={onLoading}/>
+      }
       <div className="text-white">
-        actor
+        Reviews <br/>
+        Work in proress ...
       </div>
       <div className="text-white">
-        reviews
+        Reviews <br/>
+        Work in proress ...
       </div>
+      <div className="text-white">
+        Reviews <br/>
+        Work in proress ...
+      </div>      
     </div>
   );
 }
 
-export default DetailInformation;
+export default memo(DetailInformation);

@@ -140,8 +140,8 @@ function SlideShow() {
     <div className="h-[65vh] flex w-full py-6 px-28 relative duration-500">
       <div className="my-auto basis-2/5">
         <h1 className="text-3xl font-extrabold text-white leading-none mb-3">
-          {posters[currentIndex].title}
-          <div className="inline-block ml-4 text-sm font-medium border border-l-4 border-s-primary pl-2 p-[4px] align-middle">
+          <span className="mr-4 leading-tight">{posters[currentIndex].title}</span>
+          <div className="inline-block text-sm font-medium border border-l-4 border-s-primary pl-2 p-[4px] align-middle">
             {posters[currentIndex].vote_average} &#9734;
           </div>
         </h1>
