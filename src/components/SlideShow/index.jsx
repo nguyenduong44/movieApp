@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {LazyLoadImage} from 'react-lazy-load-image-component'
+import { Link } from "react-router-dom";
 
 import {BsChevronCompactLeft, BsChevronCompactRight} from 'react-icons/bs';
 import { GoDotFill } from "react-icons/go";
@@ -153,26 +154,39 @@ function SlideShow() {
         <div className="text-gray-500 text-sm font-semibold leading-6 mb-8 line-clamp-4">
           {posters[currentIndex].overview} 
         </div>
-        <button className="btn">
-          Play
-        </button>
+        <Link to={`/details/movie/${posters[currentIndex].id}`}>
+          <button className="btn duration-500 hover:opacity-50">
+            Play
+          </button>
+        </Link>
       </div>
       {posters.length > 0 && 
       (
-        <div
-          style={{
-            backgroundImage: `url('https://image.tmdb.org/t/p/w1280${posters[currentIndex].backdrop_path}')`,
-            boxShadow: 'inset 0px 0px 500px rgba(0,0,0,1)'
-          }}
-          className="w-6/12 h-full bg-cover rounded-2xl duration-500 absolute right-[112px] top-0 opacity-90">
-            <div className="h-full flex justify-center pt-[57%] drop-shadow-sm">
-              {Array.from({ length: 4 }, (_, index) => (
-                <div key={index} className={`hover:opacity-70 cursor-pointer mx-1 ${selectedDotIndex === index ? 'opacity-65' : ''}`}>
-                  <GoDotFill onClick={() => goToSlide(index)} size={20} color="#CCFF00"/>
-                </div>
-              ))}
-            </div>
-        </div>)}
+        <> {/* Wrap everything in a fragment */}
+          <Link to={`/details/movie/${posters[currentIndex].id}`}>
+            <div
+              style={{
+                backgroundImage: `url('https://image.tmdb.org/t/p/w1280${posters[currentIndex].backdrop_path}')`,
+                boxShadow: 'inset 0px 0px 500px rgba(0,0,0,1)',
+              }}
+              className="w-6/12 h-full bg-cover rounded-2xl duration-500 absolute right-[112px] top-0 opacity-90"
+            />
+          </Link>
+          <div className="h-5 flex items-end absolute right-[29%] mb-5 bottom-0 drop-shadow-sm">
+            {Array.from({ length: 4 }, (_, index) => (
+              <div
+                key={index}
+                className={`hover:opacity-70 cursor-pointer mx-1 ${
+                  selectedDotIndex === index ? 'opacity-65' : ''
+                }`}
+                onClick={() => goToSlide(index)}
+              >
+                <GoDotFill size={20} color="#CCFF00" />
+              </div>
+            ))}
+          </div>
+        </>
+        )}
         <div className="hover:bg-opacity-40 absolute top-[50%] -translate-x-0 translate-y-[-50%] left-10 text-2xl rounded-full p-2 bg-primary bg-opacity-75 text-white cursor-pointer"> 
           <BsChevronCompactLeft onClick={prevSlide} size={20}/>
         </div>

@@ -1,6 +1,7 @@
 import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Details from '../pages/Details';
+import Category from '../pages/Category';
 
 const publicRoutes = [
   {
@@ -14,7 +15,11 @@ const publicRoutes = [
   {
     path: '/details/:dataType/:movieId',
     component: Details
-  }
+  },
+  {
+    path: '/:category',
+    component: Category
+  },
 ];
 
 const privateRoutes = [

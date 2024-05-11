@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query'
 import axios from "axios";
@@ -15,6 +15,7 @@ function DetailsMovie() {
   const [pLayList, setPLayList] = useState(false);
   const [favorite, setFavorite] = useState(false);
   const {movieId, dataType} = useParams();
+  const location = useLocation();
 
   const fetchItems = async () => {
     const response = await axios.get(
@@ -39,6 +40,11 @@ function DetailsMovie() {
       window.scrollTo({top: 0, behavior: "instant"})
     }
   }, [isLoading,isError]);
+
+  useEffect(() => {
+    localStorage.setItem('Data', location.state)
+  })
+
 
   if(isLoading)
   {
