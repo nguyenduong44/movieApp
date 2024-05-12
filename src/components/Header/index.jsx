@@ -41,7 +41,7 @@ function Header() {
           Phim<br/>Swim<IoIosWater color="#CCFF00"/>
         </Link>
         <HeaderItems />
-        <div className="flex w-[35%] tablet:w-0 mobile:w-0 flex-initial justify-between items-center">
+        <div className="flex w-[35%] tablet:w-0 gap-5 mobile:w-0 justify-end items-center">
           <HeaderSearch />
           <HeaderLanguages />
           <HeaderAccount />

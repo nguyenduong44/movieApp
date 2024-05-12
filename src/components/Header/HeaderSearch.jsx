@@ -1,16 +1,16 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { BsSearch } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 function HeaderSearch() {
-  
+
   return (
-    <div className="tablet:hidden mobile:hidden">
-      <input 
-      placeholder="Search..."
-      className="px-2 py-1 font-semibold placeholder-gray-400 text-black rounded-2xl border-none 
-      ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2 focus:outline-none"
-      />
-    </div>
+    <Link to={'/search'}>
+      <div className="tablet:hidden mobile:hidden cursor-pointer px-3 py-1
+        rounded-lg hover:bg-primary-rgba"
+      >
+       <BsSearch color="#fff" size={25}/>
+      </div>
+    </Link>
   );
 }
 

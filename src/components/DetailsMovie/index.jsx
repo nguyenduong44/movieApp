@@ -43,7 +43,7 @@ function DetailsMovie() {
 
   useEffect(() => {
     localStorage.setItem('Data', location.state)
-  })
+  }, []);
 
 
   if(isLoading)
@@ -71,7 +71,7 @@ function DetailsMovie() {
           onMouseEnter={() => setPlayBtn(true)}
           onMouseLeave={() => setPlayBtn(false)}
         />
-        <div className="absolute left-9 bottom-14">
+        <div className="absolute left-28 mobile:left-9 bottom-14">
           <div>
             <h1 className="text-white font-extrabold text-4xl mb-5 mobile:text-xl">{data.title || data.name}</h1>
             <div className="flex items-center">
