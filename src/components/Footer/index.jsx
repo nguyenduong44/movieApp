@@ -9,10 +9,11 @@ function Footer() {
   const [linkein, setLinkedin] = useState(false);
 
   return (
-    <footer className="w-full py-12 px-28 bg-[#0b1512] flex justify-between"
+    <footer className="w-full py-12 px-28 bg-[#0b1512] flex justify-between
+    mobile:px-9 mobile:flex-col"
             style={{boxShadow: 'inset 0px 0px 100px rgba(0,0,0,1)'}}
     >
-      <div className="flex flex-col justify-between w-1/2">
+      <div className="flex flex-col justify-between w-1/2 mobile:w-full">
         <div>
           <img src={logo} alt="logo" className="h-40 w-h-40 mx-auto"/>
           <p className="text-[#8F9FA3] text-sm leading-6 font-semibold mt-6">
@@ -50,7 +51,7 @@ function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 pl-[20%] justify-center">
+      <div className="flex flex-col flex-1 pl-[20%] justify-center mobile:pl-0 mobile:mt-9">
         <div>
           <h1 className="text-white">Contact Us</h1>
           <p className="text-[#8F9FA3] text-sm">+84 378938307</p>

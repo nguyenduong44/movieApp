@@ -35,6 +35,7 @@ function LayoutCategory() {
     if(['popular', 'now_playing', 'upcoming'].includes(prevCategory))
     {
       setPage(1);
+      window.scrollTo(0, 0);
     }
     setPrevCategory(category);
   },[category])
@@ -81,7 +82,7 @@ function LayoutCategory() {
 
   return (
 
-    <div className="px-28 text-white">
+    <div className="px-28 text-white mobile:px-9">
       <h1 className="text-4xl font-extrabold mb-10">{title}</h1>
       <Item 
         data={data}

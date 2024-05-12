@@ -12,9 +12,11 @@ function DetailInformation({ data, onLoading, onError }) {
   }
 
   return (
-    <div className="w-full bg-[#050b0a] py-9 px-28">
-      <div className="text-slate-300 flex mb-16">
-        <div className="w-1/2">
+    <div className="w-full bg-[#050b0a] py-9 px-28 mobile:px-9">
+      <div className="text-slate-300 flex mb-16
+      tablet:flex-col tablet:w-full mobile:flex-col mobile:w-full
+      ">
+        <div className="w-1/2 tablet:w-full tablet:mb-10 mobile:w-full mobile:mb-10">
           <h3 className="text-lg text-white font-bold mb-3">About</h3>
           <div className="flex mb-3 text-sm">
             <p className="w-[30%]">Genres</p>
@@ -35,7 +37,7 @@ function DetailInformation({ data, onLoading, onError }) {
             {data && <span>{data.vote_average}</span>}
           </div>
         </div>
-        <div className="w-1/2">
+        <div className="w-1/2 tablet:w-full mobile:w-full">
           <h3 className="text-lg text-white font-bold mb-3">Overview</h3>
           <p className="">{data && data.overview}</p>
         </div>

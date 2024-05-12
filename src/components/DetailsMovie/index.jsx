@@ -60,7 +60,9 @@ function DetailsMovie() {
     <div>
       <div style={{
         backgroundImage: `url('https://image.tmdb.org/t/p/original${data.backdrop_path}')`}}
-      className="w-full h-[90vh] bg-cover bg-center bg-no-repeat relative from-[#050b0a]">
+      className="w-full h-[90vh] bg-cover bg-center bg-no-repeat relative from-[#050b0a]
+        tablet:h-[100vh] mobile:h-[100vh]
+      ">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050b0a]"
               style={{boxShadow: 'inset 0 72px 40px -7px rgba(0,0,0,0.3)'}}
         ></div>
@@ -69,9 +71,9 @@ function DetailsMovie() {
           onMouseEnter={() => setPlayBtn(true)}
           onMouseLeave={() => setPlayBtn(false)}
         />
-        <div className="absolute left-28 bottom-14">
+        <div className="absolute left-9 bottom-14">
           <div>
-            <h1 className="text-white font-extrabold text-4xl mb-5">{data.title || data.name}</h1>
+            <h1 className="text-white font-extrabold text-4xl mb-5 mobile:text-xl">{data.title || data.name}</h1>
             <div className="flex items-center">
               <h1 className="text-white text-base border-none rounded-lg 
                       bg-primary bg-opacity-65 px-4 py-2 cursor-pointer 

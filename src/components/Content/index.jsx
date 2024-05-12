@@ -14,7 +14,7 @@ function Content() {
   }, []);
 
   return (
-    <div className="my-16 px-28">
+    <div className="my-16 px-28 mobile:px-9">
       <ContentSection title="Popular" icon={<FaHotjar color="yellow" className="mr-2"/>}>
           <ItemList
             title="Popular"
