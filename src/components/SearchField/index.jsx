@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useCallback, useEffect } from "react";
-import { useParams } from "react-router-dom";
+
 import ItemsSearch from "./ItemsSearch";
 
 function SearchField() {
@@ -31,7 +31,7 @@ function SearchField() {
     const currentPageJSON = localStorage.getItem('Data');
     const currentPage = JSON.parse(currentPageJSON)
     if (currentPage) {
-      setMovieName(currentPage.searchInput);
+      setMovieName(currentPage.startDate);
       localStorage.removeItem('Data');
     }
   },[]);

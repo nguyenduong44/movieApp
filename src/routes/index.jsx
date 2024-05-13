@@ -3,6 +3,7 @@ import Profile from '../pages/Profile'
 import Details from '../pages/Details';
 import Category from '../pages/Category';
 import Search from '../pages/Search';
+import Discover from '../pages/Discover';
 
 const publicRoutes = [
   {
@@ -24,6 +25,10 @@ const publicRoutes = [
   {
     path: '/search',
     component: Search
+  },
+  {
+    path: '/discover',
+    component: Discover
   },
 ];
 
