@@ -58,6 +58,10 @@ import ItemsDiscover from "./ItemsDiscover";
     if (currentPage) {
       setStartDate(currentPage.startDate);
       setEndDate(currentPage.endDate);
+      setType(currentPage.type);
+      setAdult(currentPage.adult);
+      setSortBy(currentPage.sortBy);
+      setGenres(currentPage.genres);
       localStorage.removeItem('Data');
     }
   },[]);
@@ -160,6 +164,10 @@ import ItemsDiscover from "./ItemsDiscover";
         onError={isError}
         startDate={startDate}
         endDate={endDate}
+        type={type}
+        adult={adult}
+        sortBy={sortBy}
+        genres={genres}
       />
     </div>
   );

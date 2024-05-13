@@ -4,7 +4,7 @@ import { CiStar } from "react-icons/ci";
 import { memo } from "react";
 
 
-function ItemsDiscover({ data, onDateToYear, onLoading, onError, startDate, endDate }) {
+function ItemsDiscover({ data, onDateToYear, onLoading, onError, startDate, endDate, type, adult, sortBy, genres }) {
 
   if(onLoading)
   {
@@ -22,7 +22,11 @@ function ItemsDiscover({ data, onDateToYear, onLoading, onError, startDate, endD
 
   const dataLinkJSON = {
     startDate: startDate,
-    endDate: endDate
+    endDate: endDate,
+    type: type,
+    adult: adult,
+    sortBy: sortBy,
+    genres, genres
   }
 
   const dataLink = JSON.stringify(dataLinkJSON);
