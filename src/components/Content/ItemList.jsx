@@ -1,7 +1,5 @@
-import { memo, useEffect } from "react";
-
+import { memo, useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
-
 import axios from 'axios'
 
 import {LazyLoadImage} from 'react-lazy-load-image-component';
@@ -9,24 +7,25 @@ import { Link } from "react-router-dom";
 
 import { CiStar } from "react-icons/ci";
 
-function ItemList({fetchUrl, title, onDateToYear, dataType }) {
+function ItemList({fetchUrl, title, onDateToYear, dataType}) {
 
-  const fetchItems = async () => {
+  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en-US');
+
+  const fetchItems = async (language) => {
     const apiUrl = dataType === 'movie' ? 
       'https://api.themoviedb.org/3/movie/' :
       'https://api.themoviedb.org/3/tv/';
-    const response = await axios.get(apiUrl + fetchUrl);
-    return response.data.results;
-  }
+
+    const languageUrl = `&language=${language}`
+    const response = await axios.get(apiUrl + fetchUrl + languageUrl);
+    return response.data;
+  };
 
   const { isError, isLoading, data } = useQuery({
-    queryKey: [title],
-    queryFn: fetchItems,
+    queryKey: [title, language],
+    queryFn:() => fetchItems(language),
     retry: 3,
     retryDelay: 1000,
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnMount: false
   });
 
   useEffect(() => {
@@ -35,6 +34,14 @@ function ItemList({fetchUrl, title, onDateToYear, dataType }) {
       window.scrollTo({top: 0, behavior: "smooth"})
     }
   }, [isLoading,isError]);
+
+  useEffect(() => {
+    const previousLanguage = localStorage.getItem('language');
+    if (previousLanguage !== language) {
+      setLanguage(language);
+      localStorage.setItem('language', language);
+    }
+  }, [language]);
 
 
   if(isLoading)
@@ -51,7 +58,7 @@ function ItemList({fetchUrl, title, onDateToYear, dataType }) {
     <div className="text-white grid grid-cols-5 gap-x-8 gap-y-10
       tablet:grid-cols-4 mobile:grid-cols-2
     ">
-      {data && data.slice(0,10).map((item, index) => {
+      {data?.results.slice(0,10).map((item, index) => {
         return (
           <Link to={`/details/${dataType}/${item.id}`} key={index}>
             <div className="col-span-1 relative hover:grayscale-[30%] cursor-pointer

@@ -12,19 +12,20 @@ function LayoutCategory() {
   const [title, setTitle] = useState('popular');
   const [page, setPage] = useState(1);
   const [prevCategory, setPrevCategory] = useState(null);
+  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en-US');
   
   const totalPage = 10;
   const {category} = useParams();
 
-  const fetchItems = async (page = 1) => {
-    const apiUrl = `https://api.themoviedb.org/3/movie/${category}?api_key=92cd1c00191d7a87cc773c5ee643696c&page=${page}`
+  const fetchItems = async ({page = 1, language}) => {
+    const apiUrl = `https://api.themoviedb.org/3/movie/${category}?api_key=92cd1c00191d7a87cc773c5ee643696c&language=${language}&page=${page}`
     const response = await axios.get(apiUrl);
     return response.data;
   } 
 
   const {isLoading, isError, data, isPlaceholderData} = useQuery({
-    queryKey: [category, page],
-    queryFn: () => fetchItems(page),
+    queryKey: [category, page, language],
+    queryFn: () => fetchItems({page, language}),
     retry: 3,
     retryDelay: 1000,
     placeholderData: keepPreviousData
@@ -49,6 +50,14 @@ function LayoutCategory() {
       localStorage.removeItem('Data');
     }
   },[category]);
+
+  useEffect(() => {
+    const previousLanguage = localStorage.getItem('language');
+    if (previousLanguage !== language) {
+      setLanguage(language);
+      localStorage.setItem('language', language);
+    }
+  }, [language]);
 
   useEffect(() => {
     if(category === 'popular')

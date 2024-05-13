@@ -8,15 +8,18 @@ function SearchField() {
 
   const [movieName, setMovieName] = useState('');
 
-  const fetchItems = async (movieName) => {
-    const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=92cd1c00191d7a87cc773c5ee643696c&query=${movieName}`;
+  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en-US');
+
+  const fetchItems = async ({movieName, language}) => {
+    const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=92cd1c00191d7a87cc773c5ee643696c&language=${language}
+    &query=${movieName}`;
     const response = await axios.get(apiUrl);
     return response.data;
   }
 
   const {isLoading, isError, data} = useQuery({
-    queryKey: ['search', movieName],
-    queryFn: () => fetchItems(movieName),
+    queryKey: ['search', movieName, language],
+    queryFn: () => fetchItems({movieName, language}),
     retry: 3,
     retryDelay: 1000,
   });
@@ -35,6 +38,14 @@ function SearchField() {
       localStorage.removeItem('Data');
     }
   },[]);
+
+  useEffect(() => {
+    const previousLanguage = localStorage.getItem('language');
+    if (previousLanguage !== language) {
+      setLanguage(language);
+      localStorage.setItem('language', language);
+    }
+  }, [language]);
   
   return (
     <div className="mt-24 mx-28">

@@ -16,18 +16,19 @@ function DetailsMovie() {
   const [favorite, setFavorite] = useState(false);
   const {movieId, dataType} = useParams();
   const location = useLocation();
+  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en-US');
 
-  const fetchItems = async () => {
+  const fetchItems = async (language) => {
     const response = await axios.get(
       `https://api.themoviedb.org/3/${dataType}/${movieId}
-      ?api_key=92cd1c00191d7a87cc773c5ee643696c&append_to_response=credits`
+      ?api_key=92cd1c00191d7a87cc773c5ee643696c&language=${language}&append_to_response=credits`
     );
     return response.data;
   }
 
   const { isLoading, isError, data } = useQuery({
-    queryKey: [movieId],  
-    queryFn: fetchItems,
+    queryKey: [movieId, language],  
+    queryFn: () => fetchItems(language),
     retry: 3,
     retryDelay: 1000,
     staleTime: Infinity,
@@ -45,6 +46,13 @@ function DetailsMovie() {
     localStorage.setItem('Data', location.state)
   }, []);
 
+  useEffect(() => {
+    const previousLanguage = localStorage.getItem('language');
+    if (previousLanguage !== language) {
+      setLanguage(language);
+      localStorage.setItem('language', language);
+    }
+  }, [language]);
 
   if(isLoading)
   {

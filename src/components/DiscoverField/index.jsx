@@ -13,10 +13,11 @@ import ItemsDiscover from "./ItemsDiscover";
     const [adult, setAdult] = useState(false);
     const [sortBy, setSortBy] = useState('popularity.desc');
     const [genres, setGenres] = useState('');
+    const [language, setLanguage] = useState(localStorage.getItem('language') || 'en-US');
 
-  const fetchItems = async ({startDate, endDate, adult, sortBy, genres, type}) => {
+  const fetchItems = async ({startDate, endDate, adult, sortBy, genres, type, language}) => {
     const apiUrl = `
-    https://api.themoviedb.org/3/discover/${type}?api_key=92cd1c00191d7a87cc773c5ee643696c&include_adult=${adult}&
+    https://api.themoviedb.org/3/discover/${type}?api_key=92cd1c00191d7a87cc773c5ee643696c&include_adult=${adult}&language=${language}&
     primary_release_date.gte=${startDate}&primary_release_date.lte=${endDate}
     &sort_by=${sortBy}&with_genres=${genres}
     `;
@@ -25,21 +26,21 @@ import ItemsDiscover from "./ItemsDiscover";
   };
 
   const fetchGenres = async () => {
-    const genresApi = 'https://api.themoviedb.org/3/genre/movie/list?api_key=92cd1c00191d7a87cc773c5ee643696c';
+    const genresApi = `https://api.themoviedb.org/3/genre/movie/list?api_key=92cd1c00191d7a87cc773c5ee643696c&language=${language}`;
     const response = await axios.get(genresApi);
     return response.data;
   };
 
   const {isLoading, isError, data: movieData} = useQuery({
-    queryKey: ['discover', startDate, endDate, adult, sortBy, genres, type],
-    queryFn: () => fetchItems({startDate, endDate, adult, sortBy, genres, type}),
+    queryKey: ['discover', startDate, endDate, adult, sortBy, genres, type, language],
+    queryFn: () => fetchItems({startDate, endDate, adult, sortBy, genres, type, language}),
     retry: 3,
     retryDelay: 1000,
   });
 
   const {data: genresData} = useQuery({
-    queryKey: ['genres'],
-    queryFn: fetchGenres,
+    queryKey: ['genres', language],
+    queryFn: () => fetchGenres(language),
     retry: 3,
     retryDelay: 1000,
     refetchInterval: false
@@ -66,8 +67,17 @@ import ItemsDiscover from "./ItemsDiscover";
     }
   },[]);
 
+  useEffect(() => {
+    const previousLanguage = localStorage.getItem('language');
+    if (previousLanguage !== language) {
+      setLanguage(language);
+      localStorage.setItem('language', language);
+    }
+  }, [language]);
+
   return (
     <div className="mt-24 mx-28">
+      <h1 className="text-white text-4xl font-extrabold mb-10">Discover</h1>
       <div className="flex gap-8 mb-14">
         <div>
           <span className="text-white">From: </span>

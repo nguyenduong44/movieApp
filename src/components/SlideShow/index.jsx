@@ -19,11 +19,11 @@ function SlideShow() {
   const [errorGenres, setErrorGenres] = useState(null);
   const [loadingGenres, setLoadingGenres] = useState(true);
 
-  const posterUrl = 'https://api.themoviedb.org/3/movie/now_playing?api_key=92cd1c00191d7a87cc773c5ee643696c';
-  const genresUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=92cd1c00191d7a87cc773c5ee643696c';
+  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en-US');
 
-  const fetchData = () =>
+  const fetchData = (language) =>
   {
+    const posterUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=92cd1c00191d7a87cc773c5ee643696c&language=${language}`;
     fetch(posterUrl)
       .then(res => {
         if(!res.ok)
@@ -42,7 +42,8 @@ function SlideShow() {
       });
   };
 
-  const fetchGenres = () => {
+  const fetchGenres = (language) => {
+    const genresUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=92cd1c00191d7a87cc773c5ee643696c&language=${language}`;
     fetch(genresUrl)
       .then(res => {
         if(!res.ok)
@@ -62,12 +63,20 @@ function SlideShow() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(language);
+    fetchGenres(language); 
+  }, [language]);
 
   useEffect(() => {
-    fetchGenres();
-  },[]);
+    const languageJSON = localStorage.getItem('language');
+    if (languageJSON) {
+      setLanguage(languageJSON);
+    }
+  }, []);
+  
+  useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
 
   useEffect(() => {
     if (posters && posters[currentIndex] && posters[currentIndex].genre_ids && genre) {
