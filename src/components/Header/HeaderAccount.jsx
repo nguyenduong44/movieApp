@@ -19,7 +19,6 @@ function HeaderAccount() {
     const listen = onAuthStateChanged(auth, (user) => {
       if(user){
         setAuthUser(user)
-        console.log(user);
       }else{
         setAuthUser(null);
       }
@@ -30,7 +29,10 @@ function HeaderAccount() {
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => window.location.reload())
+      .then(() => {
+        navigate('/');
+        // window.location.reload();
+      })
       .catch(err => err.message);
   }
 

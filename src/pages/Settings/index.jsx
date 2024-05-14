@@ -4,7 +4,7 @@ import SettingComponent from '../../components/auth/SettingComponent';
 
 function Settings() {
   return (
-    <div>
+    <div className='pt-24'>
       <Header />
       <SettingComponent />
       <Footer />
