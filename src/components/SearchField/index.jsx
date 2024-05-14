@@ -34,7 +34,7 @@ function SearchField() {
     const currentPageJSON = localStorage.getItem('Data');
     const currentPage = JSON.parse(currentPageJSON)
     if (currentPage) {
-      setMovieName(currentPage.startDate);
+      setMovieName(currentPage.searchInput);
       localStorage.removeItem('Data');
     }
   },[]);

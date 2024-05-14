@@ -4,6 +4,10 @@ import Details from '../pages/Details';
 import Category from '../pages/Category';
 import Search from '../pages/Search';
 import Discover from '../pages/Discover';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import Settings from '../pages/Settings';
+
 
 const publicRoutes = [
   {
@@ -30,6 +34,18 @@ const publicRoutes = [
     path: '/discover',
     component: Discover
   },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/register',
+    component: Register
+  },
+  {
+    path: '/settings',
+    component: Settings
+  }
 ];
 
 const privateRoutes = [
