@@ -7,6 +7,7 @@ import Discover from '../pages/Discover';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Settings from '../pages/Settings';
+import Favorite from '../pages/Favorite';
 
 
 const publicRoutes = [
@@ -45,6 +46,10 @@ const publicRoutes = [
   {
     path: '/settings',
     component: Settings
+  },
+  {
+    path: '/favorite',
+    component: Favorite
   }
 ];
 

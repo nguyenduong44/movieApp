@@ -6,13 +6,12 @@ import axios from "axios";
 import DetailInformation from "./DetailInformation";
 
 import { PiPlayCircleDuotone } from "react-icons/pi";
-import { TbPlaylistAdd, TbHeart } from "react-icons/tb";
+import { TbHeart } from "react-icons/tb";
 
 
 
 function DetailsMovie() {
   const [playBtn, setPlayBtn] = useState(false);
-  const [pLayList, setPLayList] = useState(false);
   const [favorite, setFavorite] = useState(false);
   const {movieId, dataType} = useParams();
   const location = useLocation();
@@ -89,11 +88,7 @@ function DetailsMovie() {
               ">
                   Watch Now
               </h1>
-              <TbPlaylistAdd color={pLayList ? '8eb200' : '#fff'} size={30} className="mx-6 cursor-pointer duration-300"
-                  onMouseEnter={() => setPLayList(true)}
-                  onMouseLeave={() => setPLayList(false)}
-              />
-              <TbHeart color={favorite ? 'red' : '#fff'} size={30} className="cursor-pointer duration-300"
+              <TbHeart color={favorite ? 'red' : '#fff'} size={30} className="mx-6 cursor-pointer duration-300"
                   onMouseEnter={() => setFavorite(true)}
                   onMouseLeave={() => setFavorite(false)}
               />

@@ -1,8 +1,10 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { auth } from '../../firebase';
 import { useState, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import defaultAvatar from '../../img/not_found.jpg';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function HeaderAccount() {
   const [authUser, setAuthUser] = useState(null);
@@ -15,10 +17,18 @@ function HeaderAccount() {
     navigate('/login');
   }
 
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.loggedIn) {
+      toast("Logged in Successfully!!!");
+    }
+  }, [location]);
+
   useEffect(() => {
     const listen = onAuthStateChanged(auth, (user) => {
       if(user){
-        setAuthUser(user)
+        setAuthUser(user);
       }else{
         setAuthUser(null);
       }
@@ -40,6 +50,7 @@ function HeaderAccount() {
     <div className="tablet:absolute w-auto right-[11%]
       mobile:absolute mobile:right-[21%]
     ">
+      <ToastContainer />
       { authUser ? (<div
         className="relative flex items-center gap-2 flex-1" 
         onMouseEnter={() => setDisplaySettings(true)}
@@ -53,7 +64,12 @@ function HeaderAccount() {
           <div className={`w-36 absolute top-[120%] left-[-100px] right-[-20px] text-white
             ${displaySettings ? 'block' : 'hidden'}
           `}>
-            <p className="text-white px-2 py-2 bg-slate-700 text-center">{authUser?.displayName || 'John'}</p>
+            <p className="text-white font-bold px-2 py-2 bg-emerald-400 text-center">{authUser?.displayName || 'John'}</p>
+            <Link to={'/favorite'}>
+              <h3 className="w-full bg-gray-900 px-2 py-2 hover:bg-primary-rgba text-center"
+              
+              >Favorite</h3>
+            </Link>
             <Link to={'/settings'}>
               <h3 className="w-full bg-gray-900 px-2 py-2 hover:bg-primary-rgba text-center"
               

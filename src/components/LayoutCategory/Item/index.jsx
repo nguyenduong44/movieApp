@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 import { CiStar } from "react-icons/ci";
-import { useEffect } from "react";
 
 
 function Item({ data, onDateToYear, onLoading, onError, page, category }) {

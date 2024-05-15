@@ -1,36 +1,61 @@
 import { auth } from '../../../firebase';
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 function RegisterComponent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
+  const notify = () => toast("Registered Successfully!!!");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(userCredential);
+        if(userCredential)
+        {
+          navigate('/login' , {state:{Registered: true}});
+          notify();
+        }
       }).catch(error => console.log(error));
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h1>REGISTER</h1>
-        <input type="email" 
-          placeholder="enter your email..."
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <input type="password" 
-          placeholder="enter your password..."
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <button className="text-white" type="submit">REGISTER</button>
-        <Link to={'/login'} className="text-white">Move to login page</Link>
+    <div className='h-auto w-full'>
+      <form onSubmit={handleSubmit}
+        className='w-1/2 m-auto p-10 flex flex-col gap-7 mt-36 bg-slate-900 bg-opacity-70 rounded-2xl'
+      >
+        <h1 className='text-6xl mx-auto font-extrabold text-primary'>REGISTER</h1>
+        <div className='flex flex-col '>
+          <label className='text-primary w-[50%] mx-auto'>Email</label>
+          <input type="email"
+            placeholder="Enter your email..."
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className='w-[50%] mx-auto p-3 rounded-md outline-1 outline-primary-rgba border-2 border-lime-300'
+          />
+        </div>
+        <div className='flex flex-col'>
+          <label className='text-primary w-[50%] mx-auto'>Password</label>
+          <input type="password"
+            placeholder="Enter your password..."
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            className='w-[50%] mx-auto p-3 rounded-md outline-1 outline-primary-rgba border-2 border-lime-300'
+          />
+        </div>  
+        <button 
+          className="text-white mx-auto py-2 bg-primary-rgba w-[25%] rounded-lg font-bold"
+          type="submit"
+        >REGISTER</button>
+        <div className='flex justify-end'>
+          <p className=' text-white text-sm mr-1'>If you already had an account ? </p>
+          <Link to={'/login'} className="text-primary text-sm hover:underline"> Login now</Link>
+        </div>
+        <ToastContainer />
       </form>
     </div>
   );
