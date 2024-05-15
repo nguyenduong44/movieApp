@@ -15,6 +15,7 @@ function GeneralSetting() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user);
         setUser(user);
         setDisplayName(user.displayName || 'John');
         setPhoto(user.photoURL || undefinedImg);

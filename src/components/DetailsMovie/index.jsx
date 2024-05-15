@@ -2,6 +2,8 @@ import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query'
 import axios from "axios";
+import { db, auth } from '../../firebase'; 
+import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
 import DetailInformation from "./DetailInformation";
 
@@ -12,7 +14,9 @@ import { TbHeart } from "react-icons/tb";
 
 function DetailsMovie() {
   const [playBtn, setPlayBtn] = useState(false);
+  const [scale, setScale] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const [favoriteDocId, setFavoriteDocId] = useState(null);
   const {movieId, dataType} = useParams();
   const location = useLocation();
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'en-US');
@@ -53,6 +57,60 @@ function DetailsMovie() {
     }
   }, [language]);
 
+  useEffect(() => {
+    const checkFavorite = async () => {
+      if (auth.currentUser) {
+        const userId = auth.currentUser.uid;
+        try {
+          const querySnapshot = await getDocs(collection(db, "users", userId, "favoriteMovies"));
+          querySnapshot.forEach((doc) => {
+            if (doc.data().movieId === movieId && doc.data().dataType === dataType) {
+              setFavorite(true);
+              setFavoriteDocId(doc.id);
+            }
+          });
+        } catch (error) {
+          console.error("Error retrieving favorite movies:", error);
+        }
+      }
+    };
+    checkFavorite();
+  }, [movieId, dataType]);
+
+  const handleFavoriteClick = async () => {
+    if (auth.currentUser) {
+      const userId = auth.currentUser.uid;
+      if (favorite) {
+        try {
+          if (favoriteDocId) {
+            await deleteDoc(doc(db, "users", userId, "favoriteMovies", favoriteDocId));
+            setFavorite(false);
+            setFavoriteDocId(null);
+          } else {
+            console.error("Favorite document ID is null");
+          }
+        } catch (e) {
+          console.error("Error removing document: ", e);
+        }
+      } else {
+        // Add to favorites
+        try {
+          const docRef = await addDoc(collection(db, "users", userId, "favoriteMovies"), {
+            movieId,
+            dataType
+          });
+          setFavorite(true);
+          setFavoriteDocId(docRef.id);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+      }
+    } else {
+      console.log("User is not logged in");
+    }
+  };
+
+
   if(isLoading)
   {
     return <div className="text-white">Loading Items Popular</div>
@@ -88,9 +146,8 @@ function DetailsMovie() {
               ">
                   Watch Now
               </h1>
-              <TbHeart color={favorite ? 'red' : '#fff'} size={30} className="mx-6 cursor-pointer duration-300"
-                  onMouseEnter={() => setFavorite(true)}
-                  onMouseLeave={() => setFavorite(false)}
+              <TbHeart color={favorite ? 'red' : '#fff'} size={30} className="mx-6 cursor-pointer duration-300 hover:scale-125"
+                  onClick={handleFavoriteClick}
               />
             </div>
           </div>
