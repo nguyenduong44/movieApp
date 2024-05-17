@@ -1,5 +1,6 @@
 import { memo } from "react";
 import ActorInformation from "./ActorInformation";
+import DetailsVideos from "./DetailsVideos";
 
 function DetailInformation({ data, onLoading, onError }) {
 
@@ -13,6 +14,7 @@ function DetailInformation({ data, onLoading, onError }) {
 
   return (
     <div className="w-full bg-[#050b0a] py-9 px-28 mobile:px-9">
+      <DetailsVideos/>
       <div className="text-slate-300 flex mb-16
       tablet:flex-col tablet:w-full mobile:flex-col mobile:w-full
       ">
