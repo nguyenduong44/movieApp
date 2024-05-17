@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 function Season({ movieData, isMovieError, isMovieLoading, selectedSeason, onSeasonClick }) {

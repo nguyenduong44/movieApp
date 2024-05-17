@@ -111,7 +111,7 @@ function VideosComponent() {
           />
         )}
       </div>
-      <div className="px-9 w-full flex gap-10 mt-24">
+      <div className="px-9 w-full flex gap-32 mt-44 mb-24">
         <Comments />
         <Recommendations />
       </div>
