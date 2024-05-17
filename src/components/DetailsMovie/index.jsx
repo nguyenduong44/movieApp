@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from "axios";
 import { db, auth } from '../../firebase'; 
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 import DetailInformation from "./DetailInformation";
 
@@ -14,7 +15,6 @@ import { TbHeart } from "react-icons/tb";
 
 function DetailsMovie() {
   const [playBtn, setPlayBtn] = useState(false);
-  const [scale, setScale] = useState(false);
   const [favorite, setFavorite] = useState(false);
   const [favoriteDocId, setFavoriteDocId] = useState(null);
   const {movieId, dataType} = useParams();
@@ -131,21 +131,25 @@ function DetailsMovie() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050b0a]"
               style={{boxShadow: 'inset 0 72px 40px -7px rgba(0,0,0,0.3)'}}
         ></div>
-        <PiPlayCircleDuotone color={playBtn ? '#CCFF00' : '#fff'} size={100} 
-          className="absolute opacity-65 cursor-pointer top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300"
-          onMouseEnter={() => setPlayBtn(true)}
-          onMouseLeave={() => setPlayBtn(false)}
-        />
+        <Link to={`/${dataType}/${movieId}/videos`}>
+          <PiPlayCircleDuotone color={playBtn ? '#CCFF00' : '#fff'} size={100}
+            className="absolute opacity-65 cursor-pointer top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300"
+            onMouseEnter={() => setPlayBtn(true)}
+            onMouseLeave={() => setPlayBtn(false)}
+          />
+        </Link>
         <div className="absolute left-28 mobile:left-9 bottom-14">
           <div>
             <h1 className="text-white font-extrabold text-4xl mb-5 mobile:text-xl">{data.title || data.name}</h1>
             <div className="flex items-center">
-              <h1 className="text-white text-base border-none rounded-lg 
-                      bg-primary bg-opacity-65 px-4 py-2 cursor-pointer 
-                      hover:bg-opacity-80 duration-300
-              ">
-                  Watch Now
-              </h1>
+              <Link to={`/${dataType}/${movieId}/videos`}>
+                <h1 className="text-white text-base border-none rounded-lg
+                        bg-primary bg-opacity-65 px-4 py-2 cursor-pointer
+                        hover:bg-opacity-80 duration-300
+                ">
+                    Watch Now
+                </h1>
+              </Link>
               <TbHeart color={favorite ? 'red' : '#fff'} size={30} className="mx-6 cursor-pointer duration-300 hover:scale-125"
                   onClick={handleFavoriteClick}
               />

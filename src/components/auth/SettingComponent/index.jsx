@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SettingMain from "./SettingMain";
 import SettingNav from "./SettingNav";
-import { auth } from '../../../firebase';
 
 function SettingComponent() {
 

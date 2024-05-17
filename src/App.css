@@ -5,4 +5,28 @@
     
     @apply bg-black;
   }
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #fff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(204, 255, 0, 0.7);
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #A3CC00;
+  }
 }
+
+.slick-slide > div{
+  margin: 0 10px;
+}
+

@@ -8,6 +8,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Settings from '../pages/Settings';
 import Favorite from '../pages/Favorite';
+import Videos from '../pages/Videos';
 
 
 const publicRoutes = [
@@ -50,6 +51,10 @@ const publicRoutes = [
   {
     path: '/favorite',
     component: Favorite
+  },
+  {
+    path: '/:dataType/:movieId/videos',
+    component: Videos
   }
 ];
 
