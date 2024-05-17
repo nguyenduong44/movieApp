@@ -32,7 +32,7 @@ function DetailsVideos() {
 
   return (
     <div className="mb-16">
-      <h3 className="text-lg text-white font-bold mb-3">Videos || Trailers</h3>
+      <h3 className="text-lg text-white font-bold mb-3">Teasers || Trailers</h3>
       <div className="flex flex-wrap gap-4">
         {data.results.map(video => (
           <div
