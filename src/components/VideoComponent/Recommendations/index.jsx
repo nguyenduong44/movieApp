@@ -44,7 +44,8 @@ function Recommendations() {
   }
 
   return (
-    <div className="w-1/2 h-auto">
+    <div className="w-1/2 h-auto tablet:w-full mobile:w-full">
+      <h1 className="text-white text-2xl mb-6 pl-3">Recommend for you</h1>
       <Slider {...settings}>
         {data?.results.slice(0,6).map((recommend, index) => 
           (<Link to={`/details/${dataType}/${recommend.id}`} key={index} className="w-1/2">

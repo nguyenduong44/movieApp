@@ -80,10 +80,14 @@ function VideosComponent() {
 
   return (
     <div className="mt-20 mx-1 h-full">
-      <div className="flex gap-6">
+      <div className="flex gap-6
+        tablet:flex-col mobile:flex-col
+      ">
         <iframe src={`https://www.2embed.cc/embed${dataType === 'movie' ? '' : 'tv'}/${movieId}&s=${seasonLink}&e=${episodeLink}`} 
         frameborder="0" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
-        className={`${movieData.seasons ? 'w-[80%]' : 'w-[100%]'} h-[85vh]`}
+        className={`${movieData.seasons ? 'w-[80%] tablet:w-[100%] mobile:w-[100%]' : 'w-[100%]'} h-[85vh] 
+          tablet:h-[50vh] mobile:h-[50vh]
+        `}
         ></iframe>
         {movieData.seasons && 
           <Season 
@@ -111,7 +115,9 @@ function VideosComponent() {
           />
         )}
       </div>
-      <div className="px-9 w-full flex gap-32 mt-44 mb-24">
+      <div className="px-9 w-full flex gap-32 mt-44 mb-24
+        tablet:flex-col mobile:flex-col
+      ">
         <Comments />
         <Recommendations />
       </div>

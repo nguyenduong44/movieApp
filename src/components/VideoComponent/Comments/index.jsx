@@ -3,7 +3,7 @@ import { FaComments } from "react-icons/fa";
 
 function Comments() {
   return (
-    <div className="w-1/2 text-white">
+    <div className="w-1/2 text-white tablet:w-full mobile:w-full">
       <h1 className="flex items-center gap-2 text-xl"> <span><FaComments size={30}/></span> Comments</h1>
       <input type="text" 
         placeholder="Your comments ..."

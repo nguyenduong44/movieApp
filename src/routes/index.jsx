@@ -9,6 +9,7 @@ import Register from '../pages/Register';
 import Settings from '../pages/Settings';
 import Favorite from '../pages/Favorite';
 import Videos from '../pages/Videos';
+import Welcome from '../pages/Welcome';
 
 
 const publicRoutes = [
@@ -55,6 +56,10 @@ const publicRoutes = [
   {
     path: '/:dataType/:movieId/videos',
     component: Videos
+  },
+  {
+    path: '/movieApp',
+    component: Welcome
   }
 ];
 

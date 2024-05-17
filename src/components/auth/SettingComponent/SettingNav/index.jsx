@@ -10,19 +10,19 @@ function SettingNav({ setSelectedSection }) {
 
   return (
     <div className="col-span-3">
-      <ul className="text-white">
+      <ul className="text-white mobile:text-xs">
         <li
-          className={`w-full px-9 py-5 hover:bg-slate-800 cursor-pointer 
+          className={`w-full px-9 mobile:px-2 py-5 hover:bg-slate-800 cursor-pointer 
             ${selected === 'general' ? 'bg-slate-800' : ''}`}
             onClick={() => handleSelection('general')}
         >General</li>
         <li
-          className={`w-full px-9 py-5 hover:bg-slate-800 cursor-pointer
+          className={`w-full px-9 mobile:px-2 py-5 hover:bg-slate-800 cursor-pointer
             ${selected === 'changePassword' ? 'bg-slate-800' : ''}`}
             onClick={() => handleSelection('changePassword')}
         >Change Password</li>
         <li
-          className={`w-full px-9 py-5 hover:bg-slate-800 cursor-pointer
+          className={`w-full px-9 mobile:px-2 py-5 hover:bg-slate-800 cursor-pointer
             ${selected === 'theme' ? 'bg-slate-800' : ''}`}
             onClick={() => handleSelection('theme')}
         >Theme</li>

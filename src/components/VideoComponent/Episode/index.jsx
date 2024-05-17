@@ -11,7 +11,25 @@ function Episode({ onEpisodeClick, seasonsData, selectedEpisode, isSeasonsError,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,
-    focusOnSelect: true
+    focusOnSelect: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+        }
+      },
+      {
+        breakpoint: 740,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      }
+    ]
   };
 
   if (isSeasonsLoading) {
@@ -33,7 +51,7 @@ function Episode({ onEpisodeClick, seasonsData, selectedEpisode, isSeasonsError,
             onClick={() => onEpisodeClick(episode.episode_number)}
             >
               <LazyLoadImage src={`https://image.tmdb.org/t/p/w342${episode.still_path}`}
-                className="w-full h-40 bg-cover bg-center mb-3 rounded-md"
+                className="w-full h-40 bg-cover bg-center mb-3 rounded-md mobile:h-28"
               />
               <h1 className="w-full whitespace-nowrap text-lg leading-7 line-clamp-1"
               >Episode {episode.episode_number}: {episode.name}</h1>
