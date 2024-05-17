@@ -1,5 +1,4 @@
 {
-  "homepage": "https://nguyenduong44.github.io/phimswim",
   "name": "tailwind-movie-app",
   "version": "0.1.0",
   "private": true,
@@ -28,7 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b main -d build"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -49,7 +48,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1",
     "tailwindcss": "^3.4.3"
   }
 }
