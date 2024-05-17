@@ -37,7 +37,7 @@ function ItemsDiscover({ data, onDateToYear, onLoading, onError, startDate, endD
     ">
       {data?.results.map((item, index) => {
         return (
-          <Link to={`/details/movie/${item.id}`} key={index} state={dataLink}>
+          <Link to={`/details/${type}/${item.id}`} key={index} state={dataLink}>
             <div className="col-span-1 relative hover:grayscale-[30%] cursor-pointer
             duration-500 ease-in-out hover:scale-110
             ">
