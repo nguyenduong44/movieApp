@@ -11,7 +11,7 @@ function App() {
   const client = new QueryClient();
   return (
     <QueryClientProvider client={client}>
-      <Router>
+      <Router basename='/movieApp'>
         <div className='bg-black'>
             <Routes>
                 {publicRoutes.map((route, index) => {
